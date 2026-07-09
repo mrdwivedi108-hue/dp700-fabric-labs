@@ -7,3 +7,5 @@ Labs completed
 Lab	Topic	Notes
 02-analyze-spark	Analyzing data with Apache Spark in a Fabric Notebook	notes
 More labs will be added here as I progress through the DP-700 study roadmap.
+
+| [12-query-data-kql](./12-query-data-kql) | Querying an Eventhouse/KQL database with KQL and the T-SQL endpoint | [notes](./12-query-data-kql/notes.md) |
