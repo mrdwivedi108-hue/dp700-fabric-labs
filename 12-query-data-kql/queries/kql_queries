@@ -1,0 +1,50 @@
+//***********************************************************************************************************
+// Here are two articles to help you get started with KQL:
+// KQL reference guide - https://aka.ms/KQLguide
+// SQL - KQL conversions - https://aka.ms/sqlcheatsheet
+//***********************************************************************************************************
+
+
+Bikestream
+|project BikepointID,Neighbourhood,No_Empty_Docks
+| take 10
+
+ Bikestream 
+ | project Street, ["Number of Empty Docks"] = No_Empty_Docks
+ | take 10
+
+// Summarize data by using KQL
+ Bikestream
+ | summarize ["Total Number of Bikes"] = sum(No_Bikes)
+
+ Bikestream
+ | summarize ["Total Number of Bikes"] = sum(No_Bikes) by Neighbourhood
+ | project Neighbourhood, ["Total Number of Bikes"]
+
+// Modify the query as shown here to use the case function along with the isempty and isnull functions to group all 
+//trips for which the neighbourhood is unknown into a Unidentified category for follow-up.
+
+ Bikestream
+ | summarize ["Total Number of Bikes"] = sum(No_Bikes) by Neighbourhood
+ | project Neighbourhood = case(isempty(Neighbourhood) or isnull(Neighbourhood), "Unidentified", Neighbourhood), ["Total Number of Bikes"]
+
+
+//Sort data by using KQL
+ Bikestream
+ | summarize ["Total Number of Bikes"] = sum(No_Bikes) by Neighbourhood
+ | project Neighbourhood = case(isempty(Neighbourhood) or isnull(Neighbourhood), "Unidentified", Neighbourhood), ["Total Number of Bikes"]
+ | sort by Neighbourhood asc
+
+
+//Sort using order by
+ Bikestream
+ | summarize ["Total Number of Bikes"] = sum(No_Bikes) by Neighbourhood
+ | project Neighbourhood = case(isempty(Neighbourhood) or isnull(Neighbourhood), "Unidentified", Neighbourhood), ["Total Number of Bikes"]
+ | order by Neighbourhood asc
+
+// Filter data by using KQL
+ Bikestream
+ | where Neighbourhood == "Chelsea"
+ | summarize ["Total Number of Bikes"] = sum(No_Bikes) by Neighbourhood
+ | project Neighbourhood = case(isempty(Neighbourhood) or isnull(Neighbourhood), "Unidentified", Neighbourhood), ["Total Number of Bikes"]
+ | sort by Neighbourhood asc
