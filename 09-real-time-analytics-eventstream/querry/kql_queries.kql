@@ -1,0 +1,8 @@
+// Use 'take' to view a sample number of records in the table and check the data.
+['bike-by-street']
+| take 100
+
+
+['bike-by-street']
+| summarize TotalBikes = sum(SUM_No_Bikes) by Window_End_Time, Street
+| sort by Window_End_Time desc, Street asc
